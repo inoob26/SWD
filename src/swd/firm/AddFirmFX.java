@@ -186,7 +186,7 @@ public class AddFirmFX {
             ex.printStackTrace();
         }
     }
-    
+    ///БЛЯЯЯ
     private void add(){
         try{
            Firm f = new Firm();
