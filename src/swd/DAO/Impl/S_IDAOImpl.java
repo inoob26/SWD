@@ -51,7 +51,26 @@ public class S_IDAOImpl implements S_IDAO{
         Session session = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            si = (S_I) session.load(S_I.class, id);
+            si = (S_I) session.get(S_I.class, id);
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка I/O", JOptionPane.OK_OPTION);
+        }finally{
+            if(session.isOpen() || session != null){
+                session.close();
+            }
+        }
+        
+        return si;
+    }
+    
+    @Override
+    public S_I getS_IByInvoiceId(Long id) throws SQLException {
+        S_I si = null;
+        Session session = null;
+        try{
+            //"SELECT `Invoice_id` FROM `S_I` WHERE `Invoice_id` " + id.toString()
+            session = HibernateUtil.getSessionFactory().openSession();
+            si = (S_I) session.createSQLQuery("SELECT `ID`, `Service_id`, `Invoice_id`, `Firm_id`, `Count` FROM `S_I` WHERE `Invoice_id` = " + id.toString());
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка I/O", JOptionPane.OK_OPTION);
         }finally{
@@ -96,5 +115,7 @@ public class S_IDAOImpl implements S_IDAO{
             }
         }
     }
+
+    
     
 }

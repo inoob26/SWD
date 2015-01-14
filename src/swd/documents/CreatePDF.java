@@ -26,6 +26,7 @@ import swd.logic.Firm;
 import swd.logic.Invoice;
 import swd.logic.Rull;
 import swd.logic.S_I;
+import swd.logic.Service;
 
 public class CreatePDF {
     
@@ -41,14 +42,18 @@ public class CreatePDF {
     private Firm firm;
     private S_I si;
     private Invoice inv;
+    private Service srv;
+    private String sum;
     //private Rull rull;
     
-    public CreatePDF(Long f_id, Long si_id, Long inv_id){
+    public CreatePDF(Long f_id, S_I s_i ,Long inv_id,short service_inx,String s){
         try {
             firm = Factory.getInstance().getFirmDAO().getFirmById(f_id);
-            si = Factory.getInstance().getS_IDAO().getS_IById(si_id);
-            //rull = Factory.getInstance().getRullDAO().getIRullById(firm.getRule_id());
             inv = Factory.getInstance().getInvoiceDAO().getInvoiceById(inv_id);
+            si = s_i;
+            //rull = Factory.getInstance().getRullDAO().getIRullById(firm.getRule_id());
+            sum = s;
+            srv = Factory.getInstance().getServiceDAO().getServiceById(service_inx);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -96,10 +101,11 @@ public class CreatePDF {
             doc.add(new Paragraph("БИН/ИИН и адрес места нахождения поставщика: ",f_text));
             doc.add(new Paragraph("ИИК поставщика: ",f_text));
             doc.add(new Paragraph("Договор (контракт) на поставку товаров (работ,услуг): " + 
-                                    firm.getContract().toString(),f_text));
-            doc.add(new Paragraph("Условия оплаты по договору (контракту): "  
-                                    /*rull.getName()*/ ,f_text));
-            doc.add(new Paragraph("Пункт назначения поставляемых товаров (работ, услуг) ",f_text));
+                                    firm.getContract(),f_text));
+            doc.add(new Paragraph("Условия оплаты по договору (контракту): " +  
+                                    firm.getRull(),f_text));
+            doc.add(new Paragraph("Пункт назначения поставляемых товаров (работ, услуг) "
+                                    + firm.getAddress(),f_text));
             doc.add(new Paragraph(" "));
             
             doc.add(new Paragraph("Поставка товаров (работ, услуг) осуществлена по доверенности: ",f_text));
@@ -142,7 +148,68 @@ public class CreatePDF {
             }
     }
     
-    public PdfPTable create_table() throws DocumentException{
+    private void addServiceToTable(PdfPTable table,PdfPCell cell){        
+        //#
+        int j = 0;
+        j++;
+        cell = new PdfPCell(new Phrase("" + j,f_table_text));
+        cell.setColspan(1);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        //Наименование товаров
+        cell = new PdfPCell(new Phrase(srv.getName(),f_table_text));
+        cell.setColspan(1);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        //ед имерений
+        cell = new PdfPCell(new Phrase(srv.getUnit(),f_table_text));
+        cell.setColspan(1);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        //кол-во
+        cell = new PdfPCell(new Phrase("" + si.getCount(),f_table_text));
+        cell.setColspan(1);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        //цена
+        cell = new PdfPCell(new Phrase("" + srv.getCost(),f_table_text));
+        cell.setColspan(1);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        String count = Short.toString(si.getCount());
+        float cost = srv.getCost();
+        
+        float result = cost * Float.parseFloat(count);
+        
+        //Стоймость товаров без 
+        cell = new PdfPCell(new Phrase("" + result,f_table_text));
+        cell.setColspan(1);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        //НДС
+        cell = new PdfPCell(new Phrase("Без НДС",f_table_text));
+        cell.setColspan(2);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        //Всего стоимость 
+        cell = new PdfPCell(new Phrase("" + result,f_table_text));
+        cell.setColspan(1);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+        
+        for(int i=1;i<=2;i++){
+            table.addCell(new Phrase(" ",f_table_text));
+        }
+    }
+    
+    private PdfPTable create_table() throws DocumentException{
         int n = 11;
         PdfPTable table = new PdfPTable(n);
         table.setTotalWidth(new float[]{20f,100f,30f,40f,35f,70f,30f,40f,70f,30f,30f});
@@ -219,7 +286,9 @@ public class CreatePDF {
             table.addCell(cell);
         }
         
-        cell = new PdfPCell(new Phrase("Всего по счету: ",f_table_text));
+        addServiceToTable(table,cell);
+        
+        cell = new PdfPCell(new Phrase("Всего по счету: " + sum,f_table_text));
         cell.setColspan(5);
         table.addCell(cell);
         

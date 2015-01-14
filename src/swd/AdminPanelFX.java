@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import swd.bank.BankFX;
-import swd.documents.DocumentFX;
 import swd.firm.FirmFX;
 import swd.service.ServiceFX;
 import swd.users.UsersFX;
@@ -41,10 +40,10 @@ public class AdminPanelFX {
     
     public void initControl(){
         gpane = new GridPane();
-        btn_firm = new Button();
-        btn_users = new Button();
-        btn_bank = new Button();
-        btn_service = new Button();
+        btn_firm = new Button("Фирмы");
+        btn_users = new Button("Пользователи");
+        btn_bank = new Button("Банки");
+        btn_service = new Button("Услуги");
         
         img_firm = new Image(getClass().getResourceAsStream("icon/firm64.png"));
         img_users = new Image(getClass().getResourceAsStream("icon/users64.png"));
@@ -117,14 +116,12 @@ public class AdminPanelFX {
     }
     
     public void setStyleControl(){
-        btn_firm.setMaxSize(70, 70);
-        btn_firm.setMinSize(70, 70);
-        btn_users.setMaxSize(70, 70);
-        btn_users.setMinSize(70, 70);
-        btn_service.setMaxSize(70, 70);
-        btn_service.setMinSize(70, 70);
-        btn_bank.setMaxSize(70, 70);
-        btn_bank.setMinSize(70, 70);
+        
+        btn_firm.setMaxHeight(70);
+        btn_users.setMinHeight(70);
+        btn_service.setMinHeight(70);
+        btn_bank.setMinHeight(70);
+        
         
         gpane.setPadding(new Insets(10));
         gpane.setVgap(5);

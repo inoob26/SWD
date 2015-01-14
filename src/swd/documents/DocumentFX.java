@@ -51,6 +51,7 @@ public class DocumentFX {
     ChoiceBox chbx_name_service;
     
     TextField tf_count;
+    TextField tf_sum;
     
     CheckBox cbx_invoice;
     CheckBox cbx_report;
@@ -77,6 +78,7 @@ public class DocumentFX {
         chbx_name_service = new ChoiceBox();
         
         tf_count = new TextField();
+        tf_sum = new TextField();
         
         cbx_invoice = new CheckBox("Счет-фактура");
         cbx_report = new CheckBox("Акт выполненых работ");
@@ -89,13 +91,16 @@ public class DocumentFX {
         
         gpane.add(new Label("Дата: "), 0, 0);
         gpane.add(dp, 1, 0);
-        gpane.add(new Label("Кол-во наименований: "), 0, 1);
+        //gpane.add(new Label("Кол-во наименований: "), 0, 1);
         addServiceIntoCB();
-        gpane.add(chbx_count_name, 1, 1);
+        //gpane.add(chbx_count_name, 1, 1);
         gpane.add(new Label("Наименова услуг: "), 0, 2);
         gpane.add(chbx_name_service, 1, 2);
         gpane.add(new Label("Кол-во оказаных услуг: "), 0 , 3);
         gpane.add(tf_count,1,3);
+        
+        gpane.add(new Label("Всего по счету: "), 0, 4);
+        gpane.add(tf_sum,1,4);
         
         hx_btn.getChildren().addAll(btn_print,btn_close);
         vx_content.getChildren().addAll(gpane,cbx_invoice,cbx_report,hx_btn);
@@ -137,11 +142,12 @@ public class DocumentFX {
             si.setId_s(service_inx);
             si.setId_f(firm_id);
             si.setId_i(inv.getId());
-
+            
             si.setCount(Short.parseShort(tf_count.getText()));
+            
             Factory.getInstance().getS_IDAO().addS_I(si);
             
-            pdf = new CreatePDF(firm_id, si.getId(),inv.getId()); 
+            pdf = new CreatePDF(firm_id,si,inv.getId(),si.getId_s(),tf_sum.getText().toString()); 
             pdf.make_invoice();
         } catch(Exception ex){
             ex.printStackTrace();
