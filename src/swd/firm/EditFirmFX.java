@@ -251,7 +251,7 @@ public class EditFirmFX {
         }
     }
     
-    public void setEvent(){     
+    private void setEvent(){     
         btn_add.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
@@ -293,7 +293,7 @@ public class EditFirmFX {
         });
     }
     
-    public void setStyleControl(){
+    private void setStyleControl(){
         vbox.setPadding(new Insets(5));
         vbox.setSpacing(5);
         gpane.setPadding(new Insets(5));

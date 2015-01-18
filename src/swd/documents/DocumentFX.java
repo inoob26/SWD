@@ -34,32 +34,31 @@ import swd.logic.S_I;
 import swd.logic.Service;
 
 public class DocumentFX {
-    Long firm_id;
-    String firm_name;
-    LocalDate ld;
+    private Long firm_id;
+    private String firm_name;
+    private LocalDate ld;
     
-    short service_inx;
+    private short service_inx;
     
-    Stage stage;
-    VBox vx_content;
-    GridPane gpane;
-    HBox hx_btn;
+    private Stage stage;
+    private VBox vx_content;
+    private GridPane gpane;
+    private HBox hx_btn;
     
-    DatePicker dp;
+    private DatePicker dp;
     
-    ChoiceBox chbx_count_name;
-    ChoiceBox chbx_name_service;
+    private ChoiceBox chbx_count_name;
+    private ChoiceBox chbx_name_service;
     
-    TextField tf_count;
-    TextField tf_sum;
+    private TextField tf_count;
+    private TextField tf_sum;
+    private Label lbl_sum;
     
-    CheckBox cbx_invoice;
-    CheckBox cbx_report;
+    private Button btn_result;
+    private Button btn_print;
+    private Button btn_close;
     
-    Button btn_print;
-    Button btn_close;
-    
-    CreatePDF pdf;
+    private CreatePDF pdf;
     
     public DocumentFX(Stage st,Long f_id, String f_n){
         stage = st;
@@ -79,41 +78,31 @@ public class DocumentFX {
         
         tf_count = new TextField();
         tf_sum = new TextField();
+        lbl_sum = new Label();
         
-        cbx_invoice = new CheckBox("Счет-фактура");
-        cbx_report = new CheckBox("Акт выполненых работ");
-        
+        btn_result = new Button("Подсчет");
         btn_print = new Button("Сформировать");
         btn_close = new Button("Отмена");
     }
     
     private void setControl(){
-        
         gpane.add(new Label("Дата: "), 0, 0);
         gpane.add(dp, 1, 0);
-        //gpane.add(new Label("Кол-во наименований: "), 0, 1);
         addServiceIntoCB();
-        //gpane.add(chbx_count_name, 1, 1);
-        gpane.add(new Label("Наименова услуг: "), 0, 2);
-        gpane.add(chbx_name_service, 1, 2);
-        gpane.add(new Label("Кол-во оказаных услуг: "), 0 , 3);
-        gpane.add(tf_count,1,3);
+        gpane.add(new Label("Наименова услуг: "), 0, 1);
+        gpane.add(chbx_name_service, 1, 1);
+        gpane.add(new Label("Кол-во оказаных услуг: "), 0 , 2);
+        gpane.add(tf_count, 1, 2);
+        gpane.add(btn_result, 2, 2);
         
-        gpane.add(new Label("Всего по счету: "), 0, 4);
-        gpane.add(tf_sum,1,4);
+        gpane.add(new Label("Всего по счету: "), 0, 3);
+        gpane.add(lbl_sum, 1, 3);
+        
+        gpane.add(new Label("Всего по счету прописью: "), 0, 4);
+        gpane.add(tf_sum, 1, 4);
         
         hx_btn.getChildren().addAll(btn_print,btn_close);
-        vx_content.getChildren().addAll(gpane,cbx_invoice,cbx_report,hx_btn);
-    }
-    
-    private void setStyleControl(){
-        gpane.setPadding(new Insets(5));
-        gpane.setHgap(5);
-        gpane.setVgap(5);
-        hx_btn.setSpacing(5);
-        hx_btn.setAlignment(Pos.BASELINE_RIGHT);
-        vx_content.setSpacing(5);
-        vx_content.setPadding(new Insets(15));
+        vx_content.getChildren().addAll(gpane,hx_btn);
     }
     
     private void addServiceIntoCB(){
@@ -154,7 +143,28 @@ public class DocumentFX {
         }
     }
     
+    private void getResult() throws SQLException{
+        try{
+            String count = tf_count.getText();
+            Service srv = Factory.getInstance().getServiceDAO().getServiceById(service_inx);
+            float cost = srv.getCost();
+            float result = cost * Float.parseFloat(count);
+            lbl_sum = new Label(String.valueOf(result));
+            gpane.add(lbl_sum, 1, 3);
+        } catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    
     private void setEvent(){
+        btn_result.setOnAction((ActionEvent event) -> {
+            try {
+                getResult();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+                
         btn_print.setOnAction((ActionEvent event) -> {
             try {
                 print();
@@ -195,6 +205,17 @@ public class DocumentFX {
                 }
             }
         });
+    }
+    
+    
+    private void setStyleControl(){
+        gpane.setPadding(new Insets(5));
+        gpane.setHgap(5);
+        gpane.setVgap(5);
+        hx_btn.setSpacing(5);
+        hx_btn.setAlignment(Pos.BASELINE_RIGHT);
+        vx_content.setSpacing(5);
+        vx_content.setPadding(new Insets(15));
     }
     
     public void show(){

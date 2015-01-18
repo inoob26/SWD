@@ -22,8 +22,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import swd.DAO.Factory;
 import swd.DesktopApi;
+import swd.logic.Bank;
 import swd.logic.Firm;
 import swd.logic.Invoice;
+import swd.logic.Performer;
 import swd.logic.Rull;
 import swd.logic.S_I;
 import swd.logic.Service;
@@ -44,16 +46,26 @@ public class CreatePDF {
     private Invoice inv;
     private Service srv;
     private String sum;
-    //private Rull rull;
-    
+    private Performer perf;
+    private Bank bank1;
+    private Bank bank2;
+    private String bank_name1;
+    private String bank_bik1;
+    private String bank_name2;
+    private String bank_bik2;
+        
     public CreatePDF(Long f_id, S_I s_i ,Long inv_id,short service_inx,String s){
         try {
             firm = Factory.getInstance().getFirmDAO().getFirmById(f_id);
             inv = Factory.getInstance().getInvoiceDAO().getInvoiceById(inv_id);
             si = s_i;
-            //rull = Factory.getInstance().getRullDAO().getIRullById(firm.getRule_id());
             sum = s;
             srv = Factory.getInstance().getServiceDAO().getServiceById(service_inx);
+            perf = Factory.getInstance().getPerformerDAO().getPerformerById((byte) 1);
+            
+            bank1 = null;
+            bank2 = null;
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -74,13 +86,37 @@ public class CreatePDF {
         }
     }
     
+    private void getBank(Bank bank,short id,String b_n,String b_b) throws SQLException{
+        try{
+            //bank = Factory.getInstance().getBankDAO().getBankById((short) id);
+            b_n = bank.getName();
+            b_b = bank.getBik();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    private void addDestination(Document doc) throws DocumentException, SQLException{
+        try{
+            doc.add(new Paragraph("Получатель: " + firm.getName().toString() ,f_text));
+            doc.add(new Paragraph("БИН/ИИН и адрес места нахождения получателя: " + 
+                                        firm.getBin_iin().toString() + " " + firm.getAddress() ,f_text));
+            bank2 = Factory.getInstance().getBankDAO().getBankById(firm.getBank_id());
+            bank_name2 = bank2.getName();
+            bank_bik2 = bank2.getBik();
+            
+            doc.add(new Paragraph("ИИК получателя: " + firm.getIik().toString() + " "
+                                        + bank_name2 + " " + bank_bik2,f_text));
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    
     public void make_invoice() throws DocumentException, IOException{
         setFont();
         Document doc = new Document(PageSize.A4);
         Desktop d = Desktop.getDesktop();
         try{
-            
-            
             file = new File("invoice.pdf");
             PdfWriter.getInstance(doc, new FileOutputStream(file));
             doc.open();
@@ -97,9 +133,15 @@ public class CreatePDF {
             doc.add(title);
             
             doc.add(new Paragraph(" "));
-            doc.add(new Paragraph("Поставщик: ",f_text));
-            doc.add(new Paragraph("БИН/ИИН и адрес места нахождения поставщика: ",f_text));
-            doc.add(new Paragraph("ИИК поставщика: ",f_text));
+            doc.add(new Paragraph("Поставщик: " + perf.getName().toString(),f_text));
+            doc.add(new Paragraph("БИН/ИИН и адрес места нахождения поставщика: " 
+                                    + perf.getAddress().toString(),f_text));
+            bank1 = Factory.getInstance().getBankDAO().getBankById(perf.getBankId());
+            bank_name1 = bank1.getName();
+            bank_bik1 = bank1.getBik();
+            
+            doc.add(new Paragraph("ИИК поставщика: " + perf.getIik().toString() + 
+                                   " " + bank_name1 + " " + bank_bik1,f_text));
             doc.add(new Paragraph("Договор (контракт) на поставку товаров (работ,услуг): " + 
                                     firm.getContract(),f_text));
             doc.add(new Paragraph("Условия оплаты по договору (контракту): " +  
@@ -113,7 +155,8 @@ public class CreatePDF {
             doc.add(new Paragraph("Товарно-транспортная накладная: ",f_text));
             doc.add(new Paragraph(" "));
             
-            doc.add(new Paragraph("Грузоотправитель: ",f_text));
+            doc.add(new Paragraph("Грузоотправитель: " + perf.getName().toString() 
+                                    + " " + perf.getAddress().toString(),f_text));
             doc.add(p_bna);
             doc.add(new Paragraph(" "));
             
@@ -122,20 +165,18 @@ public class CreatePDF {
             doc.add(p_bna);
             doc.add(new Paragraph(" "));
             
-            doc.add(new Paragraph("Получатель: " + firm.getName().toString() ,f_text));
-            doc.add(new Paragraph("БИН/ИИН и адрес места нахождения получателя: " + 
-                                    firm.getBin_iin().toString() + " " + firm.getAddress() ,f_text));
-            doc.add(new Paragraph("ИИК получателя: " + firm.getIik().toString() ,f_text));
+            addDestination(doc);
+            
             
             
             doc.add(create_table());
             
             Phrase ph;
             
-            ph = new Phrase("Руководитель: ", f_text);
+            ph = new Phrase("Руководитель: " + perf.getDirector().toString(), f_text);
             doc.add(ph);
-            ph = new Phrase("ВЫДАЛ (ответственное лицо поставщика)", f_text);
-            doc.add(ph);
+            //ph = new Phrase("ВЫДАЛ (ответственное лицо поставщика)", f_text);
+            //doc.add(ph);
             
             doc.add(new Paragraph("Примечание: Без печати не действительно. Оригинал (первый экземпляр) — покупателю. Копия — поставщику",f_text));
             

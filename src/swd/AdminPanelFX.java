@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import swd.bank.BankFX;
 import swd.firm.FirmFX;
+import swd.firm.PerformerFX;
 import swd.service.ServiceFX;
 import swd.users.UsersFX;
 
@@ -26,6 +27,7 @@ public class AdminPanelFX {
     Button btn_users;
     Button btn_bank;
     Button btn_service;
+    Button btn_perf;
     //Button btn_docs;
     
     Image img_firm;
@@ -44,6 +46,7 @@ public class AdminPanelFX {
         btn_users = new Button("Пользователи");
         btn_bank = new Button("Банки");
         btn_service = new Button("Услуги");
+        btn_perf = new Button("Исполнитель");
         
         img_firm = new Image(getClass().getResourceAsStream("icon/firm64.png"));
         img_users = new Image(getClass().getResourceAsStream("icon/users64.png"));
@@ -61,6 +64,7 @@ public class AdminPanelFX {
         gpane.add(btn_users, 1, 0);
         gpane.add(btn_bank, 2, 0);
         gpane.add(btn_service, 3, 0);
+        gpane.add(btn_perf, 4, 0);
     }
     
     public void setEvent(){
@@ -113,6 +117,20 @@ public class AdminPanelFX {
                 }
             }
         });
+        
+        btn_perf.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    Stage st = new Stage();
+                    PerformerFX perf = new PerformerFX(st);
+                
+                    perf.show();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
     
     public void setStyleControl(){
@@ -121,6 +139,7 @@ public class AdminPanelFX {
         btn_users.setMinHeight(70);
         btn_service.setMinHeight(70);
         btn_bank.setMinHeight(70);
+        btn_perf.setMinHeight(70);
         
         
         gpane.setPadding(new Insets(10));

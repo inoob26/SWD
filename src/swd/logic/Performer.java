@@ -26,6 +26,10 @@ public class Performer {
     public byte getId(){
         return id;
     }
+
+    public void setId(byte i){
+        id = i;
+    }
     
     @Column(name="Name")
     public String getName(){
@@ -36,12 +40,12 @@ public class Performer {
         name = n;
     }
     
-    @Column(name="director")
+    @Column(name="Director")
     public String getDirector(){
         return director;
     }
     
-    public void setDirecror(String d){
+    public void setDirector(String d){
         director = d;
     }
     
@@ -86,7 +90,7 @@ public class Performer {
         return bank_id;
     }
     
-    public void  getBankId(short b_i){
+    public void  setBankId(short b_i){
         bank_id = b_i;
     }
 }

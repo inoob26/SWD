@@ -22,7 +22,7 @@
     <property name="current_session_context_class">thread</property>
     <!--классы реализации-->
     <mapping class="swd.logic.Firm" />
-    <!--<mapping class="swd.logic.Rull" />-->
+    <mapping class="swd.logic.Performer" />
     <mapping class="swd.logic.Bank" />
     <mapping class="swd.logic.Invoice" />
     <mapping class="swd.logic.S_I" />

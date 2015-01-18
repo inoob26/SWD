@@ -99,7 +99,9 @@ public class AddFirmFX {
         tf_BIK = new TextField();
         
         tf_bank = new TextField();
-
+        
+        bank_index = 0;
+        
         btn_add = new Button("Добавить Организацию");
         btn_cancel = new Button("Отмена");
     }
@@ -132,7 +134,7 @@ public class AddFirmFX {
         
         gpane.add(new Label("ИИК: "), 0, 6);
         gpane.add(tf_IIK,1,6);
-        
+        checkBankIndex(bank_index);
         addBanksIntoCB();
         
         gpane.add(new Label("Банк: ") ,0,7);
@@ -166,6 +168,14 @@ public class AddFirmFX {
             tf_BIK.setDisable(true);
         }catch(Exception ex){
             ex.printStackTrace();
+        }
+    }
+    
+    private void checkBankIndex(short b_inx){
+        if(b_inx == 0){
+            bank_index = 1;
+        } else {
+            bank_index = b_inx;
         }
     }
     
