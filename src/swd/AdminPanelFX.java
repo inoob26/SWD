@@ -28,13 +28,12 @@ public class AdminPanelFX {
     Button btn_bank;
     Button btn_service;
     Button btn_perf;
-    //Button btn_docs;
     
     Image img_firm;
     Image img_users;
     Image img_bank;
     Image img_service;
-    //Image img_docs;
+    Image img_perf;
     
     public AdminPanelFX(Stage st){
         stage = st;
@@ -52,6 +51,7 @@ public class AdminPanelFX {
         img_users = new Image(getClass().getResourceAsStream("icon/users64.png"));
         img_bank = new Image(getClass().getResourceAsStream("icon/banks64.png"));
         img_service = new Image(getClass().getResourceAsStream("icon/service64.png"));
+        img_perf = new Image(getClass().getResourceAsStream("icon/64x64/performer64.png"));
     }
     
     public void setControl(){
@@ -59,6 +59,7 @@ public class AdminPanelFX {
         btn_users.setGraphic(new ImageView(img_users));
         btn_bank.setGraphic(new ImageView(img_bank));
         btn_service.setGraphic(new ImageView(img_service));
+        btn_perf.setGraphic(new ImageView(img_perf));
         
         gpane.add(btn_firm, 0, 0);
         gpane.add(btn_users, 1, 0);
@@ -139,7 +140,7 @@ public class AdminPanelFX {
         btn_users.setMinHeight(70);
         btn_service.setMinHeight(70);
         btn_bank.setMinHeight(70);
-        btn_perf.setMinHeight(70);
+        btn_perf.setMaxHeight(70);
         
         
         gpane.setPadding(new Insets(10));
