@@ -85,22 +85,13 @@ public class CreatePDF {
             ex.printStackTrace();
         }
     }
-    
-    private void getBank(Bank bank,short id,String b_n,String b_b) throws SQLException{
-        try{
-            //bank = Factory.getInstance().getBankDAO().getBankById((short) id);
-            b_n = bank.getName();
-            b_b = bank.getBik();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
-    
+        
     private void addDestination(Document doc) throws DocumentException, SQLException{
         try{
             doc.add(new Paragraph("Получатель: " + firm.getName().toString() ,f_text));
             doc.add(new Paragraph("БИН/ИИН и адрес места нахождения получателя: " + 
                                         firm.getBin_iin().toString() + " " + firm.getAddress() ,f_text));
+            
             bank2 = Factory.getInstance().getBankDAO().getBankById(firm.getBank_id());
             bank_name2 = bank2.getName();
             bank_bik2 = bank2.getBik();
@@ -136,6 +127,7 @@ public class CreatePDF {
             doc.add(new Paragraph("Поставщик: " + perf.getName().toString(),f_text));
             doc.add(new Paragraph("БИН/ИИН и адрес места нахождения поставщика: " 
                                     + perf.getAddress().toString(),f_text));
+            
             bank1 = Factory.getInstance().getBankDAO().getBankById(perf.getBankId());
             bank_name1 = bank1.getName();
             bank_bik1 = bank1.getBik();
