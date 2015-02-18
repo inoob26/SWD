@@ -229,7 +229,7 @@ public class EditUsersFX {
         Scene scene = new Scene(vx_content);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setTitle("Добавление нового пользователя");
+        stage.setTitle("Редактирование пользовательский данных");
         stage.show();
     }
 }

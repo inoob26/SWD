@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package swd.bank;
 
 import javafx.event.ActionEvent;
@@ -22,17 +17,15 @@ import swd.DAO.Factory;
 import swd.logic.Bank;
 
 public class AddBankFX {
-    Stage stage;
-    Stage stage_parent;
-    VBox vx_content;
-    GridPane gpane;
-    HBox hx_btn;
-    
-    TextField tf_name;
-    TextField tf_bik;
-    
-    Button btn_save;
-    Button btn_cancel;
+    private Stage stage;
+    private Stage stage_parent;
+    private VBox vx_content;
+    private GridPane gpane;
+    private HBox hx_btn;
+    private TextField tf_name;
+    private TextField tf_bik;
+    private Button btn_save;
+    private Button btn_cancel;
     
     public AddBankFX(Stage st, Stage st_p){
         stage = st;
@@ -45,7 +38,6 @@ public class AddBankFX {
         hx_btn = new HBox();
         tf_name = new TextField();
         tf_bik = new TextField();
-        
         btn_save = new Button("Сохранить");
         btn_cancel = new Button("Отмена");
     }
@@ -55,9 +47,7 @@ public class AddBankFX {
         gpane.add(tf_name, 1, 0);
         gpane.add(new Label("БИК банка: "), 0, 1);
         gpane.add(tf_bik, 1, 1);
-        
         hx_btn.getChildren().addAll(btn_save,btn_cancel);
-        
         vx_content.getChildren().addAll(gpane,hx_btn);
     }
     
@@ -82,7 +72,6 @@ public class AddBankFX {
                     bank.setBik(tf_bik.getText().toUpperCase());
                     Factory.getInstance().getBankDAO().addBank(bank);
                     stage.close();
-                    
                     Stage st_bank = new Stage();
                     BankFX bfx = new BankFX(st_bank);
                     stage_parent.close();
@@ -97,10 +86,8 @@ public class AddBankFX {
     private void setStyle(){
         vx_content.setPadding(new Insets(10));
         vx_content.setSpacing(5);
-        
         gpane.setVgap(5);
         gpane.setHgap(5);
-        
         hx_btn.setSpacing(5);
         hx_btn.setAlignment(Pos.BASELINE_RIGHT);
     }
@@ -117,6 +104,5 @@ public class AddBankFX {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
         stage.show();
-        
     }
 }

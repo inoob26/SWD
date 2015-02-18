@@ -20,15 +20,12 @@ import swd.users.UsersFX;
 
 public class AdminPanelFX {
     Stage stage;
-    
     GridPane gpane;
-    
     Button btn_firm;
     Button btn_users;
     Button btn_bank;
     Button btn_service;
     Button btn_perf;
-    
     Image img_firm;
     Image img_users;
     Image img_bank;
@@ -39,7 +36,7 @@ public class AdminPanelFX {
         stage = st;
     }
     
-    public void initControl(){
+    private void initControl(){
         gpane = new GridPane();
         btn_firm = new Button("Фирмы");
         btn_users = new Button("Пользователи");
@@ -54,7 +51,7 @@ public class AdminPanelFX {
         img_perf = new Image(getClass().getResourceAsStream("icon/64x64/performer64.png"));
     }
     
-    public void setControl(){
+    private void setControl(){
         btn_firm.setGraphic(new ImageView(img_firm));
         btn_users.setGraphic(new ImageView(img_users));
         btn_bank.setGraphic(new ImageView(img_bank));
@@ -68,7 +65,7 @@ public class AdminPanelFX {
         gpane.add(btn_perf, 4, 0);
     }
     
-    public void setEvent(){
+    private void setEvent(){
         btn_firm.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
@@ -134,7 +131,7 @@ public class AdminPanelFX {
         });
     }
     
-    public void setStyleControl(){
+    private void setStyleControl(){
         
         btn_firm.setMaxHeight(70);
         btn_users.setMinHeight(70);
@@ -160,6 +157,4 @@ public class AdminPanelFX {
         stage.setResizable(false);
         stage.show();
     }
-     
-    
 }

@@ -31,40 +31,31 @@ import swd.logic.Bank;
 import swd.logic.Firm;
 
 public class AddFirmFX {
-    Stage stage;
-    Stage stage_parent;
-    
-    String rull;
-    short bank_index;
-    
-    byte flag_pane;
-            
-    VBox vbox;
-    GridPane gpane;
-    
-    HBox hx_rull;
-    HBox hx_contract;
-    HBox hx_btn;
-    
-    TextField tf_name;
-    TextField tf_phone;
-    TextField tf_contract;
-    TextField tf_address;
-    TextField tf_IIN_BIN;
-    TextField tf_IIK;
-    
-    ChoiceBox cb_name_bank;
-    
-    TextField tf_BIK;
-    TextField tf_bank;
-
-    ToggleGroup group_rull;
-    RadioButton rb_cash;
-    RadioButton rb_cashless;
-    
-    Button btn_generate;
-    Button btn_add;
-    Button btn_cancel;
+    private Stage stage;
+    private Stage stage_parent;
+    private String rull;
+    private short bank_index;
+    private byte flag_pane;            
+    private VBox vbox;
+    private GridPane gpane;    
+    private HBox hx_rull;
+    private HBox hx_contract;
+    private HBox hx_btn;    
+    private TextField tf_name;
+    private TextField tf_phone;
+    private TextField tf_contract;
+    private TextField tf_address;
+    private TextField tf_IIN_BIN;
+    private TextField tf_IIK;    
+    private ChoiceBox cb_name_bank;    
+    private TextField tf_BIK;
+    private TextField tf_bank;
+    private ToggleGroup group_rull;
+    private RadioButton rb_cash;
+    private RadioButton rb_cashless;    
+    private Button btn_generate;
+    private Button btn_add;
+    private Button btn_cancel;
     
     public AddFirmFX(Stage st,Stage st_p,byte f_p){
         stage = st;
@@ -196,7 +187,7 @@ public class AddFirmFX {
             ex.printStackTrace();
         }
     }
-    ///БЛЯ
+    
     private void add(){
         try{
            Firm f = new Firm();
@@ -254,11 +245,9 @@ public class AddFirmFX {
         group_rull.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                RadioButton chk = (RadioButton)newValue.getToggleGroup().getSelectedToggle();
-                
+                RadioButton chk = (RadioButton)newValue.getToggleGroup().getSelectedToggle();                
                 rull = chk.getText();
             }
-            
         });
     }
     
@@ -282,23 +271,18 @@ public class AddFirmFX {
         tf_bank.setMinWidth(300);
     }
     
-    
     public void show(){
         try{
             initControl();
             setControl();
             setStyleControl();
             setEvent();
-
             Scene scene = new Scene(vbox);
-
             stage.setTitle("Добавление Новой Организации");
             stage.setScene(scene);
-            stage.setResizable(false);
-            
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.show();
-            
+            stage.setResizable(false);            
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();            
         } catch(Exception ex){
             ex.printStackTrace();
         }

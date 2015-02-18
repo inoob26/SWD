@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import swd.DAO.Factory;
@@ -52,7 +53,7 @@ public class UserPanelFX {
     Button btn_bank;
     Button btn_service;
     //Button btn_users;
-    //Button btn_docs;
+    Button btn_docs;
     //Button btn_invoice;
     //Button btn_report;
     
@@ -64,7 +65,7 @@ public class UserPanelFX {
     Image img_bank;
     Image img_service;
     //Image img_users;
-    //Image img_docs;
+    Image img_docs;
     
     //CreatePDF pdf;
     
@@ -85,13 +86,13 @@ public class UserPanelFX {
 
         tv_firm = new TableView<Firm>();
         
-        btn_add_firm = new Button();
-        btn_edit_firm = new Button();
+        btn_add_firm = new Button("Добавить");
+        btn_edit_firm = new Button("Изменить");
         //btn_del_firm = new Button("удалить фирму");
-        btn_bank = new Button();
-        btn_service = new Button();
+        btn_bank = new Button("Банки");
+        btn_service = new Button("Услуги");
         //btn_users = new Button("Пользователи");
-        //btn_docs = new Button();
+        btn_docs = new Button("Документ");
         //btn_invoice = new Button("тест Счет фактура");
         //btn_report = new Button("тест Акт");
         
@@ -99,7 +100,7 @@ public class UserPanelFX {
         img_edit_firm = new Image(getClass().getResourceAsStream("icon/32x32/edit_firm32.png"));
         img_bank = new Image(getClass().getResourceAsStream("icon/32x32/banks32.png"));
         img_service = new Image(getClass().getResourceAsStream("icon/32x32/service32.png"));
-        //img_docs = new Image(getClass().getResourceAsStream("icon/32x32/docs32.png"));
+        img_docs = new Image(getClass().getResourceAsStream("icon/32x32/docs32.png"));
         
         //pdf = new CreatePDF();
     }
@@ -107,7 +108,7 @@ public class UserPanelFX {
     public void setControl(){       
         btn_edit_firm.setDisable(true);
         //btn_del_firm.setDisable(true);
-        hbox.getChildren().addAll(btn_add_firm,btn_edit_firm,btn_bank,btn_service/*,btn_docs,btn_invoice,btn_report*/);
+        hbox.getChildren().addAll(btn_add_firm,btn_edit_firm,btn_docs,btn_bank,btn_service);
         
         tbar_menu = new ToolBar(hbox);
         
@@ -132,15 +133,6 @@ public class UserPanelFX {
         ServiceFX sc = new ServiceFX(st_service);
         sc.show();
     }
-    
-    /*
-    private void showDocument(){
-        Stage st_doc = new Stage();
-        DocumentFX doc = new DocumentFX(st_doc,
-                
-        );
-        doc.show();
-    }*/
     
     private void createEditFirm(){
         Stage edit_st = new Stage();
@@ -204,7 +196,7 @@ public class UserPanelFX {
                         createDelFirm();                        
                         createDocs();                        
                         btn_edit_firm.setDisable(false);
-                        //btn_docs.setDisable(false);
+                        btn_docs.setDisable(false);
                     }
                 }
             }
@@ -243,41 +235,12 @@ public class UserPanelFX {
             }
         });
         
-        /*
         btn_docs.setOnAction(new EventHandler<ActionEvent>(){
-                @Override
-                public void handle(ActionEvent event){
-                    try{
-                        //showDocument();
-                        docs.show();
-                    }catch(Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-            });
-                
-        
-        btn_invoice.setOnAction(new EventHandler<ActionEvent>(){
-                @Override
-                public void handle(ActionEvent event){
-                    try{
-                        pdf.make_invoice();
-                    }catch(Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-            });
-                
-        btn_report.setOnAction(new EventHandler<ActionEvent>(){
             @Override
-            public void handle(ActionEvent event){
-                try{
-                    //pdf.make_report();
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+            public void handle(ActionEvent event) {
+                docs.show();
             }
-        });*/
+        });
 
         btn_edit_firm.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -302,7 +265,7 @@ public class UserPanelFX {
     }
     
     private void setStyleControl(){
-        //btn_docs.setDisable(false);
+        btn_docs.setDisable(true);
         hbox.setSpacing(5);
         //hx_search.setSpacing(5);
         vx_content.setSpacing(5);
@@ -314,20 +277,14 @@ public class UserPanelFX {
         btn_add_firm.setGraphic(new ImageView(img_add_firm));
         btn_edit_firm.setGraphic(new ImageView(img_edit_firm));
         btn_bank.setGraphic(new ImageView(img_bank));
-        //btn_docs.setGraphic(new ImageView(img_docs));
+        btn_docs.setGraphic(new ImageView(img_docs));
         btn_service.setGraphic(new ImageView(img_service));
         
-        btn_add_firm.setMaxSize(40, 40);
-        btn_edit_firm.setMaxSize(40, 40);
-        btn_bank.setMaxSize(40, 40);
-        //btn_docs.setMaxSize(40, 40);
-        btn_service.setMaxSize(40, 40);
-        
-        btn_add_firm.setMinSize(40, 40);
-        btn_edit_firm.setMinSize(40, 40);
-        btn_bank.setMinSize(40, 40);
-        //btn_docs.setMinSize(40, 40);
-        btn_service.setMinSize(40, 40);
+        btn_add_firm.setMinHeight(40);
+        btn_edit_firm.setMinHeight(40);
+        btn_bank.setMinHeight(40);
+        btn_docs.setMinHeight(40);
+        btn_service.setMinHeight(40);
     }
     
     public void show(){
@@ -342,6 +299,7 @@ public class UserPanelFX {
             stage.setTitle("Автоматизированая Система Документооборота");
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
             
             stage.show();
         } catch(Exception ex){

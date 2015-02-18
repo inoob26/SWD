@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import swd.DAO.Factory;
@@ -206,6 +207,7 @@ public class FirmFX {
             Scene scene = new Scene(vx_content);
             stage.setScene(scene);
             stage.setTitle("Список огранизаций");
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.show();
         } catch(Exception ex){

@@ -40,39 +40,39 @@ public class EditFirmFX {
     private String iik;
     private short bank_id;
     
-    Stage stage;
-    Stage stage_parent;
+    private Stage stage;
+    private Stage stage_parent;
     
-    byte flag_pane;
+    private byte flag_pane;
     
-    short bank_index;
+    private short bank_index;
             
-    VBox vbox;
-    GridPane gpane;
+    private VBox vbox;
+    private GridPane gpane;
     
-    HBox hx_rull;
-    HBox hx_contract;
-    HBox hx_btn;
+    private HBox hx_rull;
+    private HBox hx_contract;
+    private HBox hx_btn;
     
-    TextField tf_name;
-    TextField tf_phone;
-    TextField tf_contract;
-    TextField tf_address;
-    TextField tf_IIN_BIN;
-    TextField tf_IIK;
+    private TextField tf_name;
+    private TextField tf_phone;
+    private TextField tf_contract;
+    private TextField tf_address;
+    private TextField tf_IIN_BIN;
+    private TextField tf_IIK;
     
-    ChoiceBox cb_name_bank;
+    private ChoiceBox cb_name_bank;
     
-    TextField tf_BIK;
-    TextField tf_bank;
+    private TextField tf_BIK;
+    private TextField tf_bank;
 
-    ToggleGroup group_rull;
-    RadioButton rb_cash;
-    RadioButton rb_cashless;
+    private ToggleGroup group_rull;
+    private RadioButton rb_cash;
+    private RadioButton rb_cashless;
     
-    Button btn_generate;
-    Button btn_add;
-    Button btn_cancel;
+    private Button btn_generate;
+    private Button btn_add;
+    private Button btn_cancel;
     
     public EditFirmFX(Stage st,Stage st_p, Long i,String n, String p,String a,
                     String c,String r,String b_i,String ik,short b_id,byte f_p){
@@ -90,7 +90,7 @@ public class EditFirmFX {
         flag_pane = f_p;
     }
     
-    public void initControl(){
+    private void initControl(){
         vbox = new VBox();
         gpane = new GridPane();
         hx_rull = new HBox();
@@ -122,7 +122,7 @@ public class EditFirmFX {
         btn_cancel = new Button("Отмена");
     }
     
-    public void setControl() throws SQLException{  
+    private void setControl() throws SQLException{  
         tf_name.setText(name);
         gpane.add(new Label("Наименование ораганизации: "), 0, 0);
         gpane.add(tf_name, 1, 0);

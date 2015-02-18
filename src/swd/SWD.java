@@ -24,17 +24,17 @@ import swd.logic.Users;
 public class SWD extends Application {
     private byte rull_flag;
     
-    Stage stage;
+    private Stage stage;
     
-    VBox vx_content;
-    HBox hx_btn;
-    GridPane gpane;
+    private VBox vx_content;
+    private HBox hx_btn;
+    private GridPane gpane;
     
-    TextField tf_login;
-    PasswordField tf_password;
+    private TextField tf_login;
+    private PasswordField tf_password;
     
-    Button btn_sig_in;
-    Button btn_cancel;
+    private Button btn_sig_in;
+    private Button btn_cancel;
     
     private void initControl(){
         vx_content = new VBox();
@@ -106,17 +106,25 @@ public class SWD extends Application {
                 
                 if(flag_pass == true){
                     if(usr.get(i).getFlag().equals("admin")){
-                    rull_flag = 1;
+                        rull_flag = 1;
+                        return;
                     }
                     if(usr.get(i).getFlag().equals("user")) {
                         rull_flag = 2;
+                        return;
                     }
                 } else{
                     Stage st = new Stage();
                     Message msg = new Message(st,"Ошибка логина или пароля!");
                     rull_flag = 0;
                     msg.showErrorMessageDialog();
+                    return;
                 }
+            }else{
+                Stage st = new Stage();
+                Message msg = new Message(st,"Ошибка логина или пароля!");
+                rull_flag = 0;
+                msg.showErrorMessageDialog();
             }
         }
     }
@@ -134,18 +142,13 @@ public class SWD extends Application {
             @Override
             public void handle(ActionEvent event) {
                 try{
-                    String lg = tf_login.getText();
-                    
-                    checkUsers(lg);
-                    
+                    String lg = tf_login.getText();                    
+                    checkUsers(lg);                    
                     stage.close();
-                    
                     checkRull(rull_flag);
-                    
                 } catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Неверный логин или пароль", JOptionPane.OK_OPTION);
                 }
-                
             }
         });
         
@@ -177,7 +180,6 @@ public class SWD extends Application {
             setStyleControl();
 
             Scene scene = new Scene(vx_content);
-            //stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.setResizable(false);
             stage.setTitle("Вход в систему");

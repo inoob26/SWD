@@ -25,27 +25,27 @@ public class AddServiceFX{
     private String unit;
     private float cost;
     
-    Stage stage;
-    Stage stage_parent;
-    Scene scene;
+    private Stage stage;
+    private Stage stage_parent;
+    private Scene scene;
     
-    VBox vx_content;
-    GridPane gpane;
-    HBox hbox;
+    private VBox vx_content;
+    private GridPane gpane;
+    private HBox hbox;
     
-    TextField tf_name;
-    TextField tf_unit;
-    TextField tf_cost;
+    private TextField tf_name;
+    private TextField tf_unit;
+    private TextField tf_cost;
     
-    Button btn_add;
-    Button btn_cancel;
+    private Button btn_add;
+    private Button btn_cancel;
     
     public AddServiceFX(Stage st,Stage st_p){
         stage = st;
         stage_parent = st_p;
     }
     
-    public void initControl(){
+    private void initControl(){
         vx_content = new VBox();
         gpane = new GridPane();
         hbox = new HBox();
@@ -63,7 +63,7 @@ public class AddServiceFX{
         btn_cancel = new Button("Отмена");
     }
     
-    public void setControl(){
+    private void setControl(){
         gpane.add(new Label("Наименование: "), 0, 0);
         gpane.add(tf_name, 1, 0);
         
@@ -78,7 +78,7 @@ public class AddServiceFX{
         vx_content.getChildren().addAll(gpane,hbox);
     }
     
-    public void setStyleControl(){
+    private void setStyleControl(){
         vx_content.setPadding(new Insets(10));
         
         gpane.setPadding(new Insets(5));
@@ -93,13 +93,13 @@ public class AddServiceFX{
         tf_cost.setMinWidth(200);
     }
     
-    public void getData(){
+    private void getData(){
         name = tf_name.getText();
         cost = Float.parseFloat(tf_cost.getText());
         unit = tf_unit.getText();
     }
     
-    public void setEvent(){
+    private void setEvent(){
         btn_add.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {

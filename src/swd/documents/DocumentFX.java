@@ -225,7 +225,7 @@ public class DocumentFX {
         setEvent();
         
         Scene scene = new Scene(vx_content);
-        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Выписка документа");

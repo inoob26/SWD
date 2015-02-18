@@ -18,21 +18,18 @@ import swd.DAO.Factory;
 import swd.logic.Bank;
 
 public class EditBankFX {
-    short id;
-    String bank_name;
-    String bank_bik;
-    
-    Stage stage;
-    Stage stage_parent;
-    VBox vx_content;
-    GridPane gpane;
-    HBox hx_btn;
-    
-    TextField tf_name;
-    TextField tf_bik;
-    
-    Button btn_save;
-    Button btn_cancel;
+    private short id;
+    private String bank_name;
+    private String bank_bik;
+    private Stage stage;
+    private Stage stage_parent;
+    private VBox vx_content;
+    private GridPane gpane;
+    private HBox hx_btn;
+    private TextField tf_name;
+    private TextField tf_bik;
+    private Button btn_save;
+    private Button btn_cancel;
     
     public EditBankFX(Stage st,Stage st_p,short i,String b_n,String b_b){
         stage = st;
@@ -47,8 +44,7 @@ public class EditBankFX {
         gpane = new GridPane();
         hx_btn = new HBox();
         tf_name = new TextField();
-        tf_bik = new TextField();
-        
+        tf_bik = new TextField();        
         btn_save = new Button("Сохранить");
         btn_cancel = new Button("Отмена");
     }
@@ -57,14 +53,11 @@ public class EditBankFX {
         try{
             tf_name.setText(bank_name);
             tf_bik.setText(bank_bik);
-            //System.out.println(st2);
             gpane.add(new Label("Наименование Банка: "), 0, 0);
             gpane.add(tf_name, 1, 0);
             gpane.add(new Label("БИК банка: "), 0, 1);
             gpane.add(tf_bik, 1, 1);
-
             hx_btn.getChildren().addAll(btn_save,btn_cancel);
-
             vx_content.getChildren().addAll(gpane,hx_btn);
         } catch(Exception ex){
             ex.printStackTrace();
@@ -90,10 +83,8 @@ public class EditBankFX {
                     Bank bank = Factory.getInstance().getBankDAO().getBankById(id);
                     bank.setName(tf_name.getText());
                     bank.setBik(tf_bik.getText().toUpperCase());
-                    
                     Factory.getInstance().getBankDAO().updateBank(bank);
                     stage.close();
-                    
                     Stage st_bank = new Stage();
                     BankFX bfx = new BankFX(st_bank);
                     stage_parent.close();
@@ -108,10 +99,8 @@ public class EditBankFX {
     private void setStyle(){
         vx_content.setPadding(new Insets(10));
         vx_content.setSpacing(5);
-        
         gpane.setVgap(5);
         gpane.setHgap(5);
-        
         hx_btn.setSpacing(5);
         hx_btn.setAlignment(Pos.BASELINE_RIGHT);
     }
@@ -121,8 +110,7 @@ public class EditBankFX {
             initControl();
             setControl();
             setEvent();
-            setStyle();            
-            
+            setStyle();     
             Scene scene = new Scene(vx_content);
             stage.setScene(scene);
             stage.setTitle("Редактирование Банка: " + bank_name);

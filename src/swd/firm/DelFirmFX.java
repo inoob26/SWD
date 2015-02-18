@@ -17,18 +17,18 @@ import swd.UserPanelFX;
 import swd.logic.Firm;
 
 public class DelFirmFX {
-    byte flag_pane;
+    private byte flag_pane;
     
-    Long id;
-    String name;
+    private Long id;
+    private String name;
     
-    Stage stage;
-    Stage stage_parent;
+    private Stage stage;
+    private Stage stage_parent;
     
-    VBox vx_content;
-    HBox hx_btn;
-    Button btn_cancel;
-    Button btn_del;
+    private VBox vx_content;
+    private HBox hx_btn;
+    private Button btn_cancel;
+    private Button btn_del;
     
     public DelFirmFX(Stage st,Stage s_p,Long i,String n,byte f_p){
         stage = st;
@@ -38,14 +38,14 @@ public class DelFirmFX {
         flag_pane = f_p;
     }
     
-    public void initControl(){
+    private void initControl(){
         vx_content = new VBox();
         hx_btn = new HBox();
         btn_cancel = new Button("Отмена");
         btn_del = new Button("Удалить");
     }
     
-    public void setControl(){
+    private void setControl(){
         hx_btn.getChildren().addAll(btn_del,btn_cancel);
         vx_content.getChildren().addAll(new Label("Вы действительно хотите удалить: " + name + "?"),hx_btn);
     }
@@ -68,7 +68,7 @@ public class DelFirmFX {
         }
     }
     
-    public void setEvent(){
+    private void setEvent(){
         btn_del.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
@@ -92,7 +92,7 @@ public class DelFirmFX {
         });
     }
     
-    public void setStyle(){
+    private void setStyle(){
         hx_btn.setSpacing(5);
         hx_btn.setAlignment(Pos.BASELINE_CENTER);
         vx_content.setPadding(new Insets(10));

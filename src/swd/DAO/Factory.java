@@ -4,7 +4,6 @@ import swd.DAO.Impl.BankDAOImpl;
 import swd.DAO.Impl.FirmDAOImpl;
 import swd.DAO.Impl.InvoiceDAOImpl;
 import swd.DAO.Impl.PerformerDAOImpl;
-import swd.DAO.Impl.RullDAOImpl;
 import swd.DAO.Impl.S_IDAOImpl;
 import swd.DAO.Impl.ServiceDAOImpl;
 import swd.DAO.Impl.UserDAOImpl;
@@ -31,7 +30,6 @@ public class Factory {
         if(firmDAO == null){
             firmDAO = new FirmDAOImpl();
         }
-        
         return firmDAO;
     }
     
@@ -39,7 +37,6 @@ public class Factory {
         if(performerDAO == null){
             performerDAO = new PerformerDAOImpl();
         }
-        
         return performerDAO;
     }
     
@@ -47,7 +44,6 @@ public class Factory {
         if(bankDAO == null){
             bankDAO = new BankDAOImpl();
         }
-        
         return bankDAO;
     }
     
@@ -55,7 +51,6 @@ public class Factory {
         if(invoiceDAO == null){
             invoiceDAO = new InvoiceDAOImpl();
         }
-        
         return invoiceDAO;
     }
     
@@ -63,7 +58,6 @@ public class Factory {
         if(s_iDAO == null){
             s_iDAO = new S_IDAOImpl();
         }
-        
         return s_iDAO;
     }
     
@@ -71,7 +65,6 @@ public class Factory {
         if(serviceDAO == null){
             serviceDAO = new ServiceDAOImpl();
         }
-        
         return serviceDAO;
     }
     
@@ -79,7 +72,6 @@ public class Factory {
         if(userDAO == null){
             userDAO = new UserDAOImpl();
         }
-        
         return userDAO;
     }
 }

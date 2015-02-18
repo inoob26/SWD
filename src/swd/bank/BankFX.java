@@ -27,24 +27,20 @@ import swd.DAO.Factory;
 import swd.logic.Bank;
 
 public class BankFX {
-    short id;
-    String bank_name;
-    String bank_bik;
-    
-    Stage stage;
-    VBox vx_content;
-    HBox hx_btn;
-    
-    TableView<Bank> tv_bank;
-    
-    Button btn_add;
-    Button btn_edit;
-    Button btn_del;
-    Button btn_cancel;
-    
-    Image img_add;
-    Image img_edit;
-    Image img_del;
+    private short id;
+    private String bank_name;
+    private String bank_bik;
+    private Stage stage;
+    private VBox vx_content;
+    private HBox hx_btn;
+    private TableView<Bank> tv_bank;
+    private Button btn_add;
+    private Button btn_edit;
+    private Button btn_del;
+    private Button btn_cancel;
+    private Image img_add;
+    private Image img_edit;
+    private Image img_del;
     
     public BankFX(Stage st){
         stage = st;
@@ -53,15 +49,11 @@ public class BankFX {
     private void initControl(){
         vx_content = new VBox();
         hx_btn = new HBox();
-        
         tv_bank = new TableView<Bank>();
-        
         btn_add = new Button("Добавить");
         btn_edit = new Button("Изменить");
         btn_del = new Button("Удалить");
-        
         btn_cancel = new Button("Закрыть");
-        
         img_add = new Image(getClass().getResourceAsStream("add_bank32.png"));
         img_edit = new Image(getClass().getResourceAsStream("edit_bank32.png"));
         img_del = new Image(getClass().getResourceAsStream("del_bank32.png"));
@@ -71,9 +63,7 @@ public class BankFX {
         try{
             List<Bank> banks = Factory.getInstance().getBankDAO().getAllBanks();
             ObservableList<Bank> oListsBank = FXCollections.observableList(banks);
-            
             tv_bank.setItems(oListsBank);
-            
         } catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка I/O", JOptionPane.OK_OPTION);
         }
@@ -82,11 +72,8 @@ public class BankFX {
     private void setControl() throws SQLException{
         vx_content.setAlignment(Pos.CENTER_RIGHT);
         vx_content.getChildren().addAll(tv_bank,hx_btn,btn_cancel);
-        
         hx_btn.getChildren().addAll(btn_add,btn_edit,btn_del);
-        
         tv_bank.getColumns().addAll(Bank.getColumn(tv_bank));
-        
         addBankIntoTV();
     }
     
@@ -99,7 +86,6 @@ public class BankFX {
                         id = tv_bank.getSelectionModel().getSelectedItem().getId();
                         bank_name = tv_bank.getSelectionModel().getSelectedItem().getName();
                         bank_bik = tv_bank.getSelectionModel().getSelectedItem().getBik();
-                        
                         btn_edit.setDisable(false);
                         btn_del.setDisable(false);
                     }
@@ -162,10 +148,8 @@ public class BankFX {
         vx_content.setPadding(new Insets(10));
         vx_content.setSpacing(5);
         hx_btn.setSpacing(5);
-        
         btn_edit.setDisable(true);
         btn_del.setDisable(true);
-        
         btn_add.setGraphic(new ImageView(img_add));
         btn_edit.setGraphic(new ImageView(img_edit));
         btn_del.setGraphic(new ImageView(img_del));
