@@ -24,26 +24,26 @@ import swd.documents.DocumentFX;
 import swd.logic.Firm;
 
 public class FirmFX {
-    EditFirmFX editFirm; 
-    DelFirmFX delFirm;
-    DocumentFX docs;
+    private EditFirmFX editFirm; 
+    private DelFirmFX delFirm;
+    private DocumentFX docs;
     
-    Stage stage;
-    VBox vx_content;
-    HBox hx_btn;
+    private Stage stage;
+    private VBox vx_content;
+    private HBox hx_btn;
     
-    TableView<Firm> tv_firm;
+    private TableView<Firm> tv_firm;
     
-    Button btn_add;
-    Button btn_edit;
-    Button btn_del;
-    Button btn_docs;
-    Button btn_cancel;
+    private  Button btn_add;
+    private Button btn_edit;
+    private Button btn_del;
+    private Button btn_docs;
+    private Button btn_cancel;
     
-    Image img_add;
-    Image img_edit;
-    Image img_del;
-    Image img_docs;
+    private Image img_add;
+    private Image img_edit;
+    private Image img_del;
+    private Image img_docs;
     
     public FirmFX(Stage st){
         stage = st;

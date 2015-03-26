@@ -184,6 +184,8 @@ public class SWD extends Application {
             stage.setResizable(false);
             stage.setTitle("Вход в систему");
             stage.show();
+            /*AdminPanelFX admin_pane = new AdminPanelFX(st);
+            admin_pane.show();*/
         } catch (Exception ex) {
             ex.printStackTrace();
         }

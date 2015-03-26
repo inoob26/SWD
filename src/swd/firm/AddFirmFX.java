@@ -19,6 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -188,6 +190,7 @@ public class AddFirmFX {
         }
     }
     
+    //Добваление фирмы в БД
     private void add(){
         try{
            Firm f = new Firm();
@@ -211,7 +214,34 @@ public class AddFirmFX {
         }
     }
     
-    private void setEvent(){     
+    private void setEvent(){  
+        //текстовые поля
+        tf_name.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event) {
+                swd.Check ch = new swd.Check();
+                System.out.println(ch.check_TextfieldFirmTitle(tf_name.getText()));
+            }
+        });
+        
+        tf_phone.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event) {
+                swd.Check ch = new swd.Check();
+                System.out.println(ch.check_TextfieldPhone(tf_phone.getText()));
+            }
+        });
+        
+        tf_address.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event) {
+                swd.Check ch = new swd.Check();
+                System.out.println(ch.check_TextfieldAddress(tf_address.getText()));
+            }
+        });
+        
+        
+        //Кнопки
         btn_add.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
