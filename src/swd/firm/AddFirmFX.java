@@ -1,5 +1,5 @@
 package swd.firm;
-
+//не добавляються фирмы с наличным расчетом нужно это исправить!!!
 import java.sql.SQLException;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
@@ -105,6 +105,7 @@ public class AddFirmFX {
         
         gpane.add(new Label("Тел: "),0,1);
         gpane.add(tf_phone, 1, 1);
+        tf_phone.setText("8-123-456-78-90");
         
         gpane.add(new Label("Договор №: "), 0, 2);
         gpane.add(tf_contract,1,2);
@@ -224,6 +225,7 @@ public class AddFirmFX {
             }
         });
         
+        //Телефонный номер
         tf_phone.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
             public void handle(KeyEvent event) {
@@ -232,6 +234,7 @@ public class AddFirmFX {
             }
         });
         
+        //Адрес
         tf_address.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
             public void handle(KeyEvent event) {
@@ -240,7 +243,25 @@ public class AddFirmFX {
             }
         });
         
+        //БИН или ИИН
+        tf_IIN_BIN.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event) {
+                swd.Check ch = new swd.Check();
+                System.out.println(ch.check_TextfiedNumbers(tf_IIN_BIN.getText()));
+            }
+        });
         
+        //ИИК
+        tf_IIK.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event){
+                swd.Check ch = new swd.Check();
+                System.out.println(ch.check_TextfieldTextAndNumbers(tf_IIK.getText()));
+            }
+        });
+        
+                
         //Кнопки
         btn_add.setOnAction(new EventHandler<ActionEvent>(){
             @Override
